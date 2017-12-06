@@ -23,13 +23,15 @@ curl ec2-54-183-245-15.us-west-1.compute.amazonaws.com:8000/predicts -L -X POST 
 
 ## Deployment
 
-* 1. SSH into your server and [install Datmo.](https://datmo.com/get-started)
-* 2. Restart your terminal (this allows Docker to have sudo permissions)
-* 3.  Use Datmo to clone the model with:
+* SSH into your server and [install Datmo.](https://datmo.com/get-started)
+* Restart your terminal (this allows Docker to have sudo permissions)
+* Use Datmo to clone the model with:
 ```
 $ datmo clone nmwalsh/datmo_falcon_api
 ```
-* 4. Initialize the gunicorn server with:
+* `$ screen`
+* `$ cd datmo_falcon_api`
+* Initialize the gunicorn server with:
 ```
 $ datmo task run "/usr/local/bin/gunicorn --access-logfile - -b 0.0.0.0:8000 falcon_gateway:app" --port 8000
 ```
@@ -82,8 +84,3 @@ curl 0.0.0.0:8000/predicts -L -X POST -d '{"sepal_length": [6.9], "sepal_width":
 * [Datmo](https://datmo.com) - Model versioning and env builder
 * [Gunicorn](http://gunicorn.org/) - Python WSGI HTTP server framework
 * [Falcon](http://falcon.readthedocs.io/en/stable/) - Highly performant baremetal Python API Framework that compiles in C
-
-
-## License
-
-This project is licensed under the MIT License
