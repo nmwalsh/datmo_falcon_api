@@ -45,6 +45,7 @@ $ datmo task run "/usr/local/bin/gunicorn --access-logfile - -b 0.0.0.0:8000 fal
 `—port 8000` is run to open up port 8000 on the docker container, so that it can receive requests from the physical server and return them as well. This is the outward facing port of the container.
 
 ## API Endpoints:
+The model is currently a live API with the following resources:
 ```
 GET  | /info
 GET  | /predicts
@@ -56,7 +57,6 @@ _Note: This basic API doesn't have robust error handling, and will return a gene
 * incomplete number of inputs (requires all 4 inputs)
 * invalid JSON input structure.
 
-The model is currently a live API endpoint with the following resources:
 
 ## Valid Requests:
 
