@@ -2,10 +2,10 @@
 
 
 # REST API -- Iris Flower Species Classification Model
-_Example repo for deploying any Python3 Datmo model as a REST API_
+_Example repo for deploying a Python3 machine learning model as a REST API_
 
 This is our first example of being able to take a static model and deploy it to have a live inference REST API using Datmo. 
-The goal of this is to show how easy it is to deploy models with Datmo in a platform agnostic fashion -- deploy on AWS, Azure, GCP, or even baremetal servers, with no need to manage compatabilities beyond standard server interfacing and the REST specification. 
+The goal of this is to show how easy it is to deploy a machine learning model with Datmo in a platform agnostic fashion -- deploy on AWS, Azure, GCP, or even baremetal servers, with no need to struggle over compatability issues beyond the REST spec and your package installs in the `Dockerfile`.
 
 This is a simple model that uses `scikit-learn` in `python3` to predict `species` for a given flower from the [Fisher Iris Flower Dataset].
 
