@@ -15,21 +15,23 @@ To understand how to adapt this code to your Datmo model, refer to the blog post
 
 ## Deployment
 
-* 1. * SSH into your server and [install Datmo.](https://datmo.com/get-started)
-* 2. * Restart your terminal (this allows Docker to have sudo permissions)
-* 3. * Use Datmo to clone the model with:
+* 1. SSH into your server and [install Datmo.](https://datmo.com/get-started)
+* 2. Restart your terminal (this allows Docker to have sudo permissions)
+* 3.  Use Datmo to clone the model with:
 ```
 $ datmo clone nmwalsh/datmo_falcon_api
 ```
-* 4. * Initialize the gunicorn server with:
+* 4. Initialize the gunicorn server with:
 ```
 $ datmo task run "usr/local/bin/gunicorn --access-logfile - -b 0.0.0.0:8000 falcon_gateway:app" --port 8000
 ```
 
-
 `—access-logfile` is for enabling standard output for connection logging in gunicorn, which is disabled by default
+
 `-b 0.0.0.0:8000` binds gunicorn to port 8000 of the 0.0.0.0 localhost on the container that the model and gunicorn is running. This is designating which port gunicorn should be looking at to receive a data stream from inside of the container.
+
 `falcon_gateway:app` allows gunicorn to bind our falcon python app to be recognized as the official WSGI app to serve requests and responses to/from the server.
+
 `—port 8000` is run to open up port 8000 on the docker container, so that it can receive requests from the physical server and return them as well. This is the outward facing port of the container.
 
 ## Try It Out:
@@ -47,7 +49,7 @@ POST | /predicts -d {"key":[val]}
 
 * [Datmo](https://datmo.com) - Model versioning and env builder
 * [Gunicorn](http://gunicorn.org/) - Python WSGI HTTP server framework
-* [Falcon](http://falcon.readthedocs.io/en/stable/) - Highly performant 
+* [Falcon](http://falcon.readthedocs.io/en/stable/) - Highly performant baremetal Python API Framework that compiles in C
 
 
 ## License
