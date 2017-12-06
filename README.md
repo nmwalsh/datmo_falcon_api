@@ -1,7 +1,7 @@
 [![Datmo Model](https://datmo.com/nmwalsh/datmo_falcon_api/badge.svg)](https://datmo.com/nmwalsh/datmo_falcon_api)
 
 
-curl 0.0.0.0:8000/predicts -L -X POST -d ‘{“sepal_length”: [6.9], “sepal_width": [3.2], “petal_length": [5.7], ”petal_width": [2.3]}’ -H 'Content-type: application/json’ 
+curl 0.0.0.0:8000/predicts -L -X POST -d '{"sepal_length": [6.9], "sepal_width": [3.2], "petal_length": [5.7], "petal_width": [2.3]}' -H 'Content-type: application/json' 
 
 
 datmo task run "gunicorn --access-logfile - -b 0.0.0.0:8000 falcon_gateway:app" --port 8000

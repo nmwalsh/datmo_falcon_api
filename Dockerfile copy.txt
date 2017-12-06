@@ -1,7 +1,0 @@
-FROM datmo/xgboost:cpu
-RUN apt-get update
-RUN apt-get install gcc
-RUN apt-get install make
-RUN apt-get install gunicorn
-RUN pip3 install falcon
-EXPOSE 8000
