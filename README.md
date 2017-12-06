@@ -35,16 +35,38 @@ $ datmo task run "usr/local/bin/gunicorn --access-logfile - -b 0.0.0.0:8000 falc
 `—port 8000` is run to open up port 8000 on the docker container, so that it can receive requests from the physical server and return them as well. This is the outward facing port of the container.
 
 ## Try It Out:
-If deployed locally, you can try it out with an example set of plant measurements:
+The model is currently a live API endpoint with the following resources:
+** View general info about the API
+```
+curl ec2-54-183-245-15.us-west-1.compute.amazonaws.com:8000/info
+```
+** View info about the underlying model
+```
+curl ec2-54-183-245-15.us-west-1.compute.amazonaws.com:8000/predicts
+```
+** Make a prediction using data
+```
+curl ec2-54-183-245-15.us-west-1.compute.amazonaws.com:8000/predicts -L -X POST -d '{"sepal_length": [6.9], "sepal_width": [3.2], "petal_length": [5.7], "petal_width": [2.3]}' -H 'Content-type: application/json'
+```
+Prediction Response: ```"{'Species': 'Iris-virginicia'}"```
+
+If deployed locally, you can try it out with the following (note: 0.0.0.0 is significant, `localhost` sometimes binds to 127.0.0.1 and may not work if the model is running within the datmo container):
 ```
 curl 0.0.0.0:8000/predicts -L -X POST -d '{"sepal_length": [6.9], "sepal_width": [3.2], "petal_length": [5.7], "petal_width": [2.3]}' -H 'Content-type: application/json' 
 ```
+
 ## API Endpoints:
 ```
 GET  | /info
 GET  | /predicts
 POST | /predicts -d {"key":[val]}
 ```
+
+_Note: This basic API doesn't have robust error handling, and will return a generic internal server error if you attempt to run a request with..._
+* unaccepted datatypes
+* incomplete number of inputs (requires all 4 inputs)
+* invalid JSON input structure.
+
 ## Built With
 
 * [Datmo](https://datmo.com) - Model versioning and env builder
