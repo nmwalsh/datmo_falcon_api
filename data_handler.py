@@ -14,7 +14,7 @@ from predict import predict
 
 def invoke_predict(raw_json):
 	#convert args_dict to model_usable_data (have to pick model for this first)
-	input_dict = json.loads(raw_json)
+	input_dict = json.loads(raw_json.decode())
 	# make your feature list here the order in which you need your model to accept input
 	feature_list = ['sepal_length','sepal_width','petal_length','petal_width']
 	mapped_inputs = [] #initialise list that mapped inputs will be put into from feature list and raw input

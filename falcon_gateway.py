@@ -13,10 +13,9 @@ class InfoResource(object):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200  # This is the default status
         resp.body = ('\nThis is an API for a deployed Datmo model, '
-                     'where it ______function______.\n'
-                     'To learn more about this model, visit the repository online at:'
-                     '\n'
-                     '     https://datmo.com/nmwalsh/falcon-api-model\n\n')
+                     'where it takes flower lengths as input and returns the predicted Iris species.\n'
+                     'To learn more about this model, send a GET request to the /predicts endpoint or visit the repository online at: \n\n'
+                     'https://datmo.com/nmwalsh/falcon-api-model\n\n')
 
 
 class PredictsResource(object):
@@ -24,10 +23,15 @@ class PredictsResource(object):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200  # This is the default status
         resp.body = ('\nThis is the PREDICT endpoint. \n'
-        			 'Both inputs and outputs are in the form of serialized JSON. \n'
+        			 'Both requests and responses are served in JSON. \n'
         		     '\n'
-        		     'INPUT:  Purchase Metadata [List of Nums] \n'
-        		     'OUTPUT: Prediction [String]\n\n')
+        		     'INPUT:  Flower Lengths (in cm) \n'
+                     '   "sepal_length":[num]        \n'
+                     '   "sepal_width": [num]        \n'
+                     '   "petal_length":[num]        \n'
+                     '   "petal_width": [num]      \n\n'
+        		     'OUTPUT: Prediction (Species)   \n'
+                     '   "Species": [string]       \n\n')
 
     def on_post(self, req, resp): 
         """Handles POST requests"""
@@ -39,7 +43,9 @@ class PredictsResource(object):
                 ex.message)
  
         try:
-            result_json = json.loads(raw_json, encoding='utf-8')
+            result_json = json.loads(raw_json.decode(), encoding='utf-8')
+            # For Python 2.x, replace with
+            # result_json = json.loads(raw_json, encoding='utf-8')
         except ValueError:
             raise falcon.HTTPError(falcon.HTTP_400,
                 'Malformed JSON',
@@ -47,8 +53,10 @@ class PredictsResource(object):
                 'JSON was incorrect.')
  
         resp.status = falcon.HTTP_200
-        #resp.body = json.dumps(invoke_predict(raw_json), encoding='utf-8') encoding not necessary in python3.
-        resp.body = json.dumps(invoke_predict(raw_json))   
+        resp.body = json.dumps(invoke_predict(raw_json))  
+        # For Python 2.x, replace with
+        # resp.body = json.dumps(invoke_predict(raw_json), encoding='utf-8') encoding not necessary in python3.
+         
 
 # falcon.API instances are callable WSGI apps. Never change this.
 app = falcon.API()
