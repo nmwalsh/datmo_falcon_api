@@ -1,7 +1,8 @@
 # falcon_gateway.py
-
 import falcon
+import os
 import json
+import pickle
 from data_handler import invoke_predict
 
 # Falcon follows the REST architectural style, meaning (among
@@ -51,11 +52,15 @@ class PredictsResource(object):
                 'Malformed JSON',
                 'Could not decode the request body. The '
                 'JSON was incorrect.')
- 
+        
+        # loading model file
+        model_filename = os.path.join('model.dat')
+        model = pickle.load(open(model_filename, 'rb'))
+
         resp.status = falcon.HTTP_200
-        resp.body = json.dumps(invoke_predict(raw_json))  
+        resp.body = json.dumps(invoke_predict(model, raw_json))  
         # For Python 2.x, replace with
-        # resp.body = json.dumps(invoke_predict(raw_json), encoding='utf-8') encoding not necessary in python3.
+        # resp.body = json.dumps(invoke_predict(model, raw_json), encoding='utf-8') encoding not necessary in python3.
          
 
 # falcon.API instances are callable WSGI apps. Never change this.
