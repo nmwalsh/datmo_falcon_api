@@ -12,7 +12,7 @@ from predict import predict
 
 #raw_json = '{"sepal_length": [6.9], "sepal_width": [3.2], "petal_length": [5.7], "petal_width": [2.3]}'
 
-def invoke_predict(raw_json):
+def invoke_predict(model, raw_json):
 	#convert args_dict to model_usable_data (have to pick model for this first)
 	input_dict = json.loads(raw_json.decode())
 	# make your feature list here the order in which you need your model to accept input
@@ -23,7 +23,7 @@ def invoke_predict(raw_json):
 	model_usable_data = [mapped_inputs] #convert 1D array to 2D array to satisfy model specific requirements
 	
 
-	raw_model_output =  predict(model_usable_data) #requires a predict function that purely returns response. Import up in imports.
+	raw_model_output =  predict(model, model_usable_data) #requires a predict function that purely returns response. Import up in imports.
 	#prediction = json.load(str(raw_model_output)) #convert raw model results to json
 	prediction = str(raw_model_output)
 	return prediction #currently returns string
