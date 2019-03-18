@@ -13,7 +13,7 @@ This is a simple model that uses `scikit-learn` in `python3` to predict `species
 
 To understand how to adapt this code to your Datmo model, refer to the blog post [here] _not yet available_.
 
-## Try it out (It's live!)
+## Try it out (*Sorry, this endpoint is no longer live!)
 **Make a prediction using data**
 ```
 curl ec2-54-183-245-15.us-west-1.compute.amazonaws.com:8000/predicts -L -X POST -d '{"sepal_length": [6.9], "sepal_width": [3.2], "petal_length": [5.7], "petal_width": [2.3]}' -H 'Content-type: application/json'
